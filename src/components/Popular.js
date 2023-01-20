@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import { fetchPopularRepos } from '../utils/api'
+import { fetchPopularRepos } from '../utils/api.ts'
 import { FaUser, FaStar, FaCodeBranch, FaExclamationTriangle } from 'react-icons/fa'
 import Card from './Card'
 import Loading from './Loading'

@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react'
-import { battle } from '../utils/api'
+import { battle } from '../utils/api.ts'
 import { FaCompass, FaBriefcase, FaUsers, FaUserFriends, FaCode, FaUser } from 'react-icons/fa'
 import Card from './Card'
 import PropTypes from 'prop-types'

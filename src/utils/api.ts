@@ -10,7 +10,12 @@ function getErrorMsg (message:string, username:string) {
   return message
 }
 
-function getProfile (username:string) {
+export interface User{
+  id:string;
+  followers:number;
+}
+
+function getProfile (username:string):Promise<User> {
   return fetch(`https://api.github.com/users/${username}${params}`)
     .then((res) => res.json())
     .then((profile) => {
@@ -22,7 +27,7 @@ function getProfile (username:string) {
     })
 }
 
-function getRepos (username:string) {
+function getRepos (username:string):Promise<Repo[]> {
   return fetch(`https://api.github.com/users/${username}/repos${params}&per_page=100`)
     .then((res) => res.json())
     .then((repos) => {
@@ -35,7 +40,7 @@ function getRepos (username:string) {
 }
 
 
-interface Repo{
+export interface Repo{
   stargazers_count:number
 }
 function getStarCount (repos:Repo[]) {
@@ -46,7 +51,7 @@ function calculateScore (followers:number, repos:Repo[]) {
   return (followers * 3) + getStarCount(repos)
 }
 
-function getUserData (player:string) {
+function getUserData (player:string):Promise<Player> {
   return Promise.all([
     getProfile(player),
     getRepos(player)
@@ -56,14 +61,15 @@ function getUserData (player:string) {
   }))
 }
 
-interface Player{
+export interface Player{
+  profile:User; 
   score:number
 }
 function sortPlayers (players:Player[]) {
   return players.sort((a, b) => b.score - a.score)
 }
 
-export function battle (players:string[]) {
+export function battle (players:[string, string]) {
   return Promise.all([
     getUserData(players[0]),
     getUserData(players[1])
